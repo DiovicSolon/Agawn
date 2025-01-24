@@ -8,81 +8,137 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #121212;
-            --bg-secondary: #1a1a2e;
-            --text-primary: #e0e0e0;
-            --accent-color: #6a5acd;
+             --bg-primary: #121212;
+             --bg-secondary: #1a1a2e;
+             --text-primary: #e0e0e0;
+             --accent-color: #6a5acd;
+             --border-color: linear-gradient(45deg, #2c3e50, #34495e, #1abc9c);
         }
+     
+         body {
+             background-color: var(--bg-primary);
+             color: var(--text-primary);
+             font-family: 'Arial', sans-serif;
+             transition: all 0.3s ease;
+         }
+     
+         .gallery-container {
+             display: grid;
+             grid-template-columns: repeat(3, 1fr);
+             gap: 20px;
+             padding: 50px 0;
+         }
+     
+         .gallery-image-wrapper {
+             position: relative;
+             width: 100%;
+             height: 300px;
+             overflow: hidden;
+             border-radius: 10px;
+             border: 5px solid transparent;
+             background-image: var(--border-color);
+             background-size: 200% 200%;
+             background-position: 0 0;
+             transition: all 1s ease;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+         }
+     
+         .gallery-image-wrapper:hover {
+             background-position: 100% 100%;
+         }
+     
+         .gallery-image {
+    width: 100%; /* Occupy full width of wrapper */
+    max-width: 100%; /* Ensure it doesn't exceed wrapper */
+    max-height: 100%; /* Full height of wrapper */
+    object-fit: contain; /* Maintain image aspect ratio */
+    border-radius: 10px;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+    opacity: 1;
+}
+     
+         .gallery-image.fade-out {
+             opacity: 0;
+         }
+     
+         .gallery-image.fade-in {
+             opacity: 1;
+         }
+     
+         .gallery-image:hover {
+             transform: scale(1.05);
+         }
+     
+         .click-me-btn {
+             position: absolute;
+             bottom: 10px;
+             left: 50%;
+             transform: translateX(-50%);
+             background-color: rgba(106, 90, 205, 0.8);
+             color: white;
+             border: none;
+             padding: 8px 15px;
+             border-radius: 5px;
+             cursor: pointer;
+             z-index: 10;
+         }
+     
+         #add-your-images {
+             text-align: center;
+             margin: 20px;
+         }
+     
+         .upload-btn {
+             background-color: #6a5acd;
+             color: white;
+             padding: 10px 20px;
+             border: none;
+             border-radius: 5px;
+             cursor: pointer;
+         }
+     
+         @media (max-width: 768px) {
+             .gallery-container {
+                 grid-template-columns: repeat(2, 1fr);
+                 padding: 30px 0;
+             }
+     
+             .gallery-image-wrapper {
+                 height: 250px;
+             }
+     
+             .click-me-btn {
+                 padding: 6px 12px;
+             }
+         }
+     
+         @media (max-width: 576px) {
+             .gallery-container {
+                 grid-template-columns: 1fr;
+                 padding: 20px 0;
+             }
+     
+             .gallery-image-wrapper {
+                 height: 200px;
+             }
+     
+             .click-me-btn {
+                 padding: 4px 8px;
+                 font-size: 12px;
+             }
 
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: 'Arial', sans-serif;
-            transition: all 0.3s ease;
-        }
-
-        .gallery-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 50px 0;
-        }
-
-        .gallery-image-wrapper {
-            position: relative;
-            width: 100%;
-            height: 300px;
-        }
-
-        .gallery-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-image:hover {
-            transform: scale(1.05);
-        }
-
-        .click-me-btn {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(106, 90, 205, 0.8);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #add-your-images {
-            text-align: center;
-            margin: 20px;
-        }
-
-        .upload-btn {
-            background-color: #6a5acd;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #file-input {
-            display: none;
-        }
-    </style>
+             
+         }
+     </style>
 </head>
 <body>
     <div class="container">
         <h1 class="text-center my-4">"The Agawn Team Behind the Scenes of Every Picture"</h1>
         <div id="add-your-images">
-            <button class="upload-btn" data-bs-toggle="modal" data-bs-target="#uploadModal">Add Yours</button>
+            <button class="upload-btn" data-bs-toggle="modal" data-bs-target="#uploadModal">Add Yours</button><br>
+            <a href="">Maintenance</a>
         </div>
         
         <div id="gallery-container" class="gallery-container">
@@ -91,7 +147,7 @@
                 <button class="click-me-btn">Click Me</button>
             </div>
             <div class="gallery-image-wrapper">
-                <img src="b3.jpg" class="gallery-image" alt="Bestfriend Image 2" data-funny-images="b3.jpg,b4.jpg">
+                <img src="b3.jpg" class="gallery-image" alt="Bestfriend Image 2" data-funny-images="b3.jpg,monching1.jpg">
                 <button class="click-me-btn">Click Me</button>
             </div>
             <div class="gallery-image-wrapper">
@@ -110,11 +166,76 @@
                 <img src="b10.jpg" class="gallery-image" alt="Bestfriend Image 6" data-funny-images="b10.jpg,b9.jpg">
                 <button class="click-me-btn">Click Me</button>
             </div>
+
+            <div class="gallery-image-wrapper">
+                <img src="daryl1.jpg" class="gallery-image" alt="Bestfriend Image 6" data-funny-images="daryl1.jpg,daryl2.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+
+            <div class="gallery-image-wrapper">
+                <img src="jamer2.jpg" class="gallery-image" alt="Bestfriend Image 6" data-funny-images="jamer2.jpg,jamer1.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+
+            <div class="gallery-image-wrapper">
+                <img src="VT10.jpg" class="gallery-image" alt="Bestfriend Image 6" data-funny-images="VT10.jpg,kyla2.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+
+            <div class="gallery-image-wrapper">
+                <img src="grace2.jpg" class="gallery-image" alt="Bestfriend Image 6" data-funny-images="grace2.jpg,grace1.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+
+            <div class="gallery-image-wrapper">
+                <img src="messil1.jpg" class="gallery-image" alt="Bestfriend Image 6" data-funny-images="messil1.jpg,messil2.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+
+            <div class="gallery-image-wrapper">
+                <img src="salyn22.jpg" class="gallery-image" alt="Bestfriend Image 6" data-funny-images="salyn22.jpg,orangesalyn1.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+
+            <div class="gallery-image-wrapper">
+                <img src="jen2.jpg" class="gallery-image" alt="Bestfriend Image 6" data-funny-images="jen1.jpg,jen2.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+
+            <div class="gallery-image-wrapper">
+                <img src="joc1.jpg" class="gallery-image" alt="Bestfriend Image 6" data-funny-images="joc1.jpg,joc2.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+
+            <div class="gallery-image-wrapper">
+                <img src="sansan2.jpg" class="gallery-image" alt="Bestfriend Image 6" data-funny-images="sansan2.jpg,sansan1.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+
+            <div class="gallery-image-wrapper">
+                <img src="sale2.jpg" class="gallery-image" alt="Bestfriend Image 6" data-funny-images="sale2.jpg,sale.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+
+            <div class="gallery-image-wrapper">
+                <img src="jim2.jpg" class="gallery-image" alt="Bestfriend Image 6" data-funny-images="jim2.jpg,jim.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+
         </div>
-    </div>
     </div>
 
     <!-- Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img id="modalImage" class="img-fluid" src="" alt="Full-screen Image">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -138,119 +259,52 @@
             </div>
         </div>
     </div>
-
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAIJC9U_FbqF2p1v4oKZFsUQLYJYO-gLjk",
-            authDomain: "agawnteam.firebaseapp.com",
-            projectId: "agawnteam",
-            storageBucket: "agawnteam.appspot.com",
-            messagingSenderId: "1043719591547",
-            appId: "1:1043719591547:web:911d4ce93c73335576f4de"
-        };
-
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        const storage = firebase.storage();
-
-        // Click Me functionality
+        // Click Me functionality for toggling between images with smooth animation
+        document.querySelectorAll('.click-me-btn').forEach((button) => {
+            button.addEventListener('click', function() {
+                const wrapper = button.closest('.gallery-image-wrapper');
+                const img = wrapper.querySelector('.gallery-image');
+                const images = img.dataset.funnyImages.split(',');
+    
+                // Get the current image source
+                const currentSrc = img.src.split('/').pop();
+    
+                // Fade out the current image before changing
+                img.classList.add('fade-out');
+    
+                // Wait for the fade-out transition to complete before changing the image
+                setTimeout(() => {
+                    // Toggle between the two images
+                    const nextImage = currentSrc === images[0] ? images[1] : images[0];
+                    img.src = nextImage;
+    
+                    // Wait for the image to load before fading it back in
+                    img.onload = () => {
+                        img.classList.remove('fade-out');
+                        img.classList.add('fade-in');
+                    };
+                }, 600); // Wait for the fade-out transition to complete
+            });
+        });
+    
+        // Open the image in full screen modal
+        document.querySelectorAll('.gallery-image').forEach((image) => {
+            image.addEventListener('click', function() {
+                const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+                const modalImage = document.getElementById('modalImage');
+                modalImage.src = image.src;  // Set the modal image source to the clicked image
+                modal.show();  // Show the modal
+            });
+        });
+    
+        // Upload images functionality
         document.getElementById('uploadForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const image1 = document.getElementById('image1').files[0];
-    const image2 = document.getElementById('image2').files[0];
-
-    if (image1 && image2) {
-        const storageRef1 = firebase.storage().ref('images/' + Date.now() + '_' + image1.name);
-        const storageRef2 = firebase.storage().ref('images/' + Date.now() + '_' + image2.name);
-
-        Promise.all([
-            storageRef1.put(image1),
-            storageRef2.put(image2)
-        ])
-        .then(snapshots => Promise.all([
-            snapshots[0].ref.getDownloadURL(),
-            snapshots[1].ref.getDownloadURL()
-        ]))
-        .then(([imageUrl1, imageUrl2]) => {
-            return firebase.firestore().collection('bestfriendGallery').add({
-                image: imageUrl1,
-                image2: imageUrl2,
-                uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
-            });
-        })
-        .then(() => {
-            alert('Images uploaded successfully!');
-            $('#uploadModal').modal('hide');
-            loadFirestoreImages();
-        })
-        .catch(error => {
-            console.error("Upload error:", error);
-            alert('Error uploading images.');
+            e.preventDefault();
+            alert('Images uploaded (but this part is not connected to any backend now)!');
         });
-    }
-});
-
-// Update Firestore image loading function
-function loadFirestoreImages() {
-    firebase.firestore().collection('bestfriendGallery').get().then((snapshot) => {
-        const firestoreContainer = document.createElement('div');
-        firestoreContainer.id = 'firestore-images';
-        firestoreContainer.className = 'gallery-container';
-        
-        snapshot.docs.forEach(doc => {
-            const data = doc.data();
-            const wrapper = document.createElement('div');
-            wrapper.className = 'gallery-image-wrapper';
-            
-            const images = [data.image, data.image2];
-            images.forEach(src => {
-                const img = document.createElement('img');
-                img.src = src;
-                img.className = 'gallery-image';
-                wrapper.appendChild(img);
-            });
-            
-            const btn = document.createElement('button');
-            btn.className = 'click-me-btn';
-            btn.textContent = 'Click Me';
-            btn.addEventListener('click', function() {
-                const currentImage = wrapper.querySelector('.gallery-image:first-child');
-                const secondImage = wrapper.querySelector('.gallery-image:last-child');
-                
-                // Toggle between two images
-                if (currentImage.src === images[0]) {
-                    currentImage.src = images[1];
-                } else {
-                    currentImage.src = images[0];
-                }
-            });
-            
-            wrapper.appendChild(btn);
-            firestoreContainer.appendChild(wrapper);
-        });
-
-        // Remove previous Firestore images if exist
-        const existingFirestoreImages = document.getElementById('firestore-images');
-        if (existingFirestoreImages) {
-            existingFirestoreImages.remove();
-        }
-
-        // Append new Firestore images after original gallery
-        document.getElementById('gallery-container').after(firestoreContainer);
-    });
-}
-
-// Load Firestore images on page load
-window.onload = loadFirestoreImages;
     </script>
-        
-   
 </body>
 </html>
