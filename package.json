@@ -1,0 +1,15 @@
+{
+  "name": "agawn",
+  "version": "1.0.0",
+  "description": "Picture of my Friends in PeaceValley",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx live-server"
+  },
+  "dependencies": {
+    "firebase": "^11.2.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

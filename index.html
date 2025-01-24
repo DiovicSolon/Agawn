@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bestfriend Gallery</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #121212;
+            --bg-secondary: #1a1a2e;
+            --text-primary: #e0e0e0;
+            --accent-color: #6a5acd;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Arial', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 50px 0;
+        }
+
+        .gallery-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 300px;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.05);
+        }
+
+        .click-me-btn {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(106, 90, 205, 0.8);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #add-your-images {
+            text-align: center;
+            margin: 20px;
+        }
+
+        .upload-btn {
+            background-color: #6a5acd;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #file-input {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">"The Agawn Team Behind the Scenes of Every Picture"</h1>
+        <div id="add-your-images">
+            <button class="upload-btn" data-bs-toggle="modal" data-bs-target="#uploadModal">Add Yours</button>
+        </div>
+        
+        <div id="gallery-container" class="gallery-container">
+            <div class="gallery-image-wrapper">
+                <img src="b1.jpg" class="gallery-image" alt="Bestfriend Image 1" data-funny-images="b1.jpg,b2.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+            <div class="gallery-image-wrapper">
+                <img src="b3.jpg" class="gallery-image" alt="Bestfriend Image 2" data-funny-images="b3.jpg,b4.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+            <div class="gallery-image-wrapper">
+                <img src="b5.jpg" class="gallery-image" alt="Bestfriend Image 3" data-funny-images="b5.jpg,b6.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+            <div class="gallery-image-wrapper">
+                <img src="b7.jpg" class="gallery-image" alt="Bestfriend Image 4" data-funny-images="b7.jpg,b8.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+            <div class="gallery-image-wrapper">
+                <img src="VT1.jpg" class="gallery-image" alt="Bestfriend Image 5" data-funny-images="VT1.jpg,c1.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+            <div class="gallery-image-wrapper">
+                <img src="b10.jpg" class="gallery-image" alt="Bestfriend Image 6" data-funny-images="b10.jpg,b9.jpg">
+                <button class="click-me-btn">Click Me</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalLabel">Upload Your Images</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="uploadForm">
+                        <div class="mb-3">
+                            <label for="image1" class="form-label">Image 1</label>
+                            <input type="file" class="form-control" id="image1" accept="image/*" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image2" class="form-label">Image 2</label>
+                            <input type="file" class="form-control" id="image2" accept="image/*" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAIJC9U_FbqF2p1v4oKZFsUQLYJYO-gLjk",
+            authDomain: "agawnteam.firebaseapp.com",
+            projectId: "agawnteam",
+            storageBucket: "agawnteam.appspot.com",
+            messagingSenderId: "1043719591547",
+            appId: "1:1043719591547:web:911d4ce93c73335576f4de"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        // Click Me functionality
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const image1 = document.getElementById('image1').files[0];
+    const image2 = document.getElementById('image2').files[0];
+
+    if (image1 && image2) {
+        const storageRef1 = firebase.storage().ref('images/' + Date.now() + '_' + image1.name);
+        const storageRef2 = firebase.storage().ref('images/' + Date.now() + '_' + image2.name);
+
+        Promise.all([
+            storageRef1.put(image1),
+            storageRef2.put(image2)
+        ])
+        .then(snapshots => Promise.all([
+            snapshots[0].ref.getDownloadURL(),
+            snapshots[1].ref.getDownloadURL()
+        ]))
+        .then(([imageUrl1, imageUrl2]) => {
+            return firebase.firestore().collection('bestfriendGallery').add({
+                image: imageUrl1,
+                image2: imageUrl2,
+                uploadedAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        })
+        .then(() => {
+            alert('Images uploaded successfully!');
+            $('#uploadModal').modal('hide');
+            loadFirestoreImages();
+        })
+        .catch(error => {
+            console.error("Upload error:", error);
+            alert('Error uploading images.');
+        });
+    }
+});
+
+// Update Firestore image loading function
+function loadFirestoreImages() {
+    firebase.firestore().collection('bestfriendGallery').get().then((snapshot) => {
+        const firestoreContainer = document.createElement('div');
+        firestoreContainer.id = 'firestore-images';
+        firestoreContainer.className = 'gallery-container';
+        
+        snapshot.docs.forEach(doc => {
+            const data = doc.data();
+            const wrapper = document.createElement('div');
+            wrapper.className = 'gallery-image-wrapper';
+            
+            const images = [data.image, data.image2];
+            images.forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.className = 'gallery-image';
+                wrapper.appendChild(img);
+            });
+            
+            const btn = document.createElement('button');
+            btn.className = 'click-me-btn';
+            btn.textContent = 'Click Me';
+            btn.addEventListener('click', function() {
+                const currentImage = wrapper.querySelector('.gallery-image:first-child');
+                const secondImage = wrapper.querySelector('.gallery-image:last-child');
+                
+                // Toggle between two images
+                if (currentImage.src === images[0]) {
+                    currentImage.src = images[1];
+                } else {
+                    currentImage.src = images[0];
+                }
+            });
+            
+            wrapper.appendChild(btn);
+            firestoreContainer.appendChild(wrapper);
+        });
+
+        // Remove previous Firestore images if exist
+        const existingFirestoreImages = document.getElementById('firestore-images');
+        if (existingFirestoreImages) {
+            existingFirestoreImages.remove();
+        }
+
+        // Append new Firestore images after original gallery
+        document.getElementById('gallery-container').after(firestoreContainer);
+    });
+}
+
+// Load Firestore images on page load
+window.onload = loadFirestoreImages;
+    </script>
+        
+   
+</body>
+</html>
